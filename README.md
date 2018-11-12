@@ -30,7 +30,6 @@ virtualenv위치
 pipenv shell
 ```
 
-
 가상환경 지우기
 
 ```sh

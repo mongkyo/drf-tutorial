@@ -1,5 +1,5 @@
 from django.urls import path, include
-from . import django_fbv, drf_fbv, drf_cbv, drf_mixin
+from . import django_fbv, drf_fbv, drf_cbv, drf_mixin, drf_generic
 # 1. snippets.urls.__init__의 내용을 수정해서
 #   /django-fbv/snippets/
 #   /django-fbv/snippets/<pk>/
@@ -19,6 +19,7 @@ urlpatterns = [
     path('drf-fbv/', include(drf_fbv)),
     path('drf-cbv/', include(drf_cbv)),
     path('drf-mixin/', include(drf_mixin)),
+    path('drf-generic-cbv/', include(drf_generic))
 ]
 
 

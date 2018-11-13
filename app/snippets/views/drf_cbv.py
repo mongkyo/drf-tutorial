@@ -1,3 +1,4 @@
+from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,3 +19,34 @@ class SnippetList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SnippetDetail(APIView):
+    def get_objcet(self, pk):
+        try:
+            return Snippet.objects.get(pk=pk)
+        except Snippet.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        snippet = self.get_objcet(pk)
+        serializer = SnippetSerializer(snippet)
+        return Response(serializer)
+
+    def put(self, request, pk, format=None, **kwargs):
+        partial = kwargs.pop('partial', False)
+
+        snippet = self.get_objcet(pk)
+        serializer = SnippetSerializer(snippet, data=request.data, partial=partial)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk, format=None):
+        return self.put(request, pk, format, partial=True)
+
+    def delete(self, request, pk, format=None):
+        snippet = self.get_objcet(pk)
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

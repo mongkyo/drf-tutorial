@@ -27,5 +27,6 @@ class AuthTokenView(APIView):
 class ProfileView(APIView):
     # URL: '/members/profile/'
     permission_classes = (permissions.IsAuthenticated, )
+
     def get(self, request):
         return Response(UserSerializer(request.user).data)

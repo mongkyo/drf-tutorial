@@ -29,8 +29,14 @@ ALLOWED_HOSTS = []
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
         'rest_framework_yaml.parsers.YAMLParser',
         'rest_framework_xml.parsers.XMLParser',
     ),
@@ -40,7 +46,6 @@ REST_FRAMEWORK = {
         'rest_framework_yaml.renderers.YAMLRenderer',
         'rest_framework_xml.renderers.XMLRenderer',
     ),
-
 }
 
 
@@ -58,8 +63,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'django_extensions',
+    'rest_framework.authtoken',
 ]
-
 
 
 MIDDLEWARE = [
